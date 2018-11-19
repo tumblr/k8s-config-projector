@@ -1,0 +1,29 @@
+---
+astring: hello world 1236969
+numbers:
+  float: -69.69
+  int: 420
+  two: 2
+boolean: true
+array:
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- '69'
+- hi mom
+nest:
+  object:
+    array:
+    - 1
+    - 2
+    - 3
+    bool: true
+    int: 420
+    string: hello world
+  array:
+  - 69
+  - 69
+  - 69

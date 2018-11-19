@@ -1,0 +1,9 @@
+name: raw1
+namespace: test
+data:
+- source: a.php
+- source: test.json
+  output_format: raw
+- source: z.php
+  output_format: raw
+  source_format: file

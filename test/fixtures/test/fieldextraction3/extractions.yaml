@@ -1,0 +1,16 @@
+anint: 2
+astring: hello world 1236969
+object:
+  array:
+  - 69
+  - 69
+  - 69
+  object:
+    array:
+    - 1
+    - 2
+    - 3
+    bool: true
+    int: 420
+    string: hello world
+

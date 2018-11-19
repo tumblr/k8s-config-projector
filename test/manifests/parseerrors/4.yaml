@@ -1,0 +1,7 @@
+name: "failure-1"
+namespace: unittest
+data:
+# requires extract or field_extractions
+- output_file: foo
+  source: test.json
+  output_format: json

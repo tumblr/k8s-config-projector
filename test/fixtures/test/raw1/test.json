@@ -1,0 +1,32 @@
+{
+  "astring": "hello world 1236969",
+  "hostport": "test-6f327ab0.dc2.tumblr.net:3295",
+  "numbers": {
+    "float": -69.69,
+    "floatingpoint": 8e18,
+    "floatingpointcap": 8E18,
+    "floatingpointneg": -8e18,
+    "floatingpointfrac": 8e-18,
+    "floatingpointfraccapneg": -8E-18,
+    "giantint": 9219999999999999999,
+    "int": 420,
+    "maxint64": 9223372036854775807,
+    "maxint64neg": -9223372036854775807,
+    "two": 2
+  },
+  "boolean": true,
+  "array": [1,2,3,4,5,6,"69","hi mom"],
+  "nest": {
+    "object": {
+      "array": [1,2,3],
+      "bool": true,
+      "floatingpoint": 8e18,
+      "floatingpointneg": -8e18,
+      "floatingpointfraccapneg": -8E-18,
+      "giantint": 9219999999999999999,
+      "int": 420,
+      "string": "hello world"
+    },
+    "array": [69,69,69]
+  }
+}

@@ -1,0 +1,6 @@
+name: "failure-1"
+namespace: unittest
+data:
+# bad output format
+- output_format: unsupported
+  source: config/generated/*.php

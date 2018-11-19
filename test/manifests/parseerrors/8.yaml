@@ -1,0 +1,5 @@
+# bad namespace
+name: 8name
+namespace: UnitTest
+data:
+- source: hello.txt

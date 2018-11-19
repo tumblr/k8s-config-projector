@@ -1,0 +1,9 @@
+# we should not allow absolute paths in sources
+name: no-absolute-sources
+namespace: unittest
+data:
+# requires output_file
+- source: /test.json
+  extract: "$.foo"
+  output_file: xxx.json
+- source: /foo/bar.json

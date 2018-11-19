@@ -1,0 +1,17 @@
+# test simple extraction of strings and numbers
+# from YAML source
+name: extractyaml1
+namespace: test
+data:
+- output_file: str
+  source: test.yaml
+  extract: "$.astring"
+- output_file: nested_string
+  source: test.yaml
+  extract: "$.nest.object.string"
+- output_file: int
+  source: test.yaml
+  extract: "$.numbers.int"
+- output_file: float
+  source: test.yaml
+  extract: "$.numbers.float"

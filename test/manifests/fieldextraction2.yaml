@@ -1,0 +1,11 @@
+# test reading fields from json, projecting into yaml
+name: fieldextraction2
+namespace: test
+data:
+- source: test.json
+  output_format: yaml
+  output_file: extractions.yaml
+  field_extractions:
+    astring: "$.astring"
+    anint: "$.numbers.two"
+    object: "$.nest"

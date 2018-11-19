@@ -1,0 +1,9 @@
+# Config repo for tumblr app
+name: globs3
+namespace: test
+data:
+# all three items are appropriate for specifying globbing raw files
+# note the source format=glob always
+# note the output_format=raw always
+# note the output_file is always missing
+- source: "*.php"

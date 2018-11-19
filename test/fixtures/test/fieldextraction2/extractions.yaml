@@ -1,0 +1,20 @@
+anint: 2
+astring: hello world 1236969
+object:
+  array:
+  - 69
+  - 69
+  - 69
+  object:
+    array:
+    - 1
+    - 2
+    - 3
+    bool: true
+    floatingpoint: 8e18
+    floatingpointfraccapneg: -8e-18
+    floatingpointneg: -8e18
+    giantint: 9219999999999999999
+    int: 420
+    string: hello world
+

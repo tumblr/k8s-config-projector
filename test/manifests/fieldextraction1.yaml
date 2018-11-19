@@ -1,0 +1,9 @@
+name: fieldextraction1
+namespace: test
+data:
+- source: test.json
+  output_file: extractions.json
+  field_extractions:
+    astring: "$.astring"
+    anint: "$.numbers.two"
+    object: "$.nest"

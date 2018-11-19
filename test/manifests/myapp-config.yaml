@@ -1,0 +1,6 @@
+name: myapp-config
+namespace: test
+data:
+- source: generated/sample.json
+- output_file: features.php
+  source: doods/a.php

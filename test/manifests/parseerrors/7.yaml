@@ -1,0 +1,5 @@
+# bad name
+name: ThisIs(())BAD!
+namespace: unittest
+data:
+- source: hello.txt

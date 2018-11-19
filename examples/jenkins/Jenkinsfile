@@ -1,0 +1,117 @@
+#!groovy
+def info_channel = '#deploys'
+def repo_name = '<yourorg>/config'
+def generated_directory = '.generated/'
+
+pipeline {
+  agent { label 'docker' }
+
+  options {
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr:'10'))
+    timeout(time: 5, unit: 'MINUTES')
+  }
+
+  environment {
+    COMMIT_URL = sh(
+      returnStdout:true,
+      script: 'git log -1 --pretty="https://github.com/<yourorg>/config/commit/%H"'
+    ).trim()
+  }
+
+  stages {
+
+    stage("settings") {
+      steps {
+        script {
+          currentBuild.displayName = "Config Projection"
+          currentBuild.description = "Kubernetes config projector - validation, projection, and deployment"
+        }
+      }
+    }
+
+    stage('Validate projection manifests') {
+      agent {
+        docker {
+          image 'ruby:2.5'
+          label 'docker'
+        }
+      }
+      steps {
+        // this workspace may not be clean, so make sure to nuke any generated files
+        // otherwise they will get picked up by the validator and fail
+        sh "find ${generated_directory} -type f -name '*.yaml' -delete"
+
+        sh 'examples/jenkins/scripts/validate-manifests.rb projection-manifests/'
+      }
+    }
+
+    stage('Test creating projections') {
+      // just ensure the manifests described project correctly
+      // we will toss this data away after this stage; the deploy stage will handle
+      // generating and deploying in one pass
+      when { not { branch 'master' } }
+      agent { label 'docker' }
+      steps {
+        script {
+          // make sure we clean up before we do any work!
+          sh "find ${generated_directory} -type f -name '*.yaml' -delete"
+          // generate the configmaps
+          sh 'examples/jenkins/scripts/jenkins-generate-configmaps.sh'
+          echo "Generated the following configs:"
+          sh "find ${generated_directory} -name '*.yaml'"
+        }
+      }
+    }
+
+    stage('Create Kubernetes namespaces') {
+      when { branch 'master' }
+      agent {
+        docker {
+          image 'ruby:2.5'
+          label 'docker'
+        }
+      }
+      steps {
+        sh 'curl -o /bin/kubectl -L curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+ && chmod +x /bin/kubectl'
+        sh 'examples/jenkins/scripts/create_namespaces.sh $(examples/jenkins/scripts/list-namespaces.rb ./kubernetes)'
+      }
+    }
+
+    stage('Project and deploy configs to Kubernetes') {
+      when { branch 'master' }
+      agent { label 'docker' }
+      steps {
+        slackSend(
+          channel: info_channel,
+          message: ":siren: *Projecting k8s configs from <${env.COMMIT_URL}|${repo_name}> has started!* Handy links: <${env.RUN_DISPLAY_URL}|:jenkins:>"
+        )
+        script {
+          // make sure we clean up before we do any work!
+          sh "find ${generated_directory} -type f -name '*.yaml' -delete"
+          sh 'examples/jenkins/scripts/jenkins-generate-configmaps.sh'
+          echo "Generated the following configs:"
+          sh "find ${generated_directory} -name '*.yaml'"
+          sh 'examples/jenkins/scripts/deploy.sh'
+        }
+      }
+      post {
+        failure {
+          slackSend(
+            channel: info_channel,
+            message: ":fire: <!here> *Projecting k8s configs from <${env.COMMIT_URL}|${repo_name}> has failed!* :rainbow_puke: Check out <${env.RUN_DISPLAY_URL}|:jenkins:> for the error! This means apps are not getting config topology changes until this is fixed!"
+          )
+        }
+        success {
+          slackSend(
+            channel: info_channel,
+            message: ":unicorn_face: :rainbow2: *Projecting k8s configs from <${env.COMMIT_URL}|${repo_name}> has succeeded!* <${env.RUN_DISPLAY_URL}|:jenkins:>"
+          )
+        }
+      }
+    }
+
+
+  }
+}

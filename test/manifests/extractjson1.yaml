@@ -1,0 +1,44 @@
+# test simple extraction of strings and numbers
+# from json
+name: extractjson1
+namespace: test
+data:
+- output_file: str
+  source: test.json
+  extract: "$.astring"
+- output_file: hostport
+  source: test.json
+  extract: "$.hostport"
+- output_file: nested_string
+  source: test.json
+  extract: "$.nest.object.string"
+- output_file: int
+  source: test.json
+  extract: "$.numbers.int"
+- output_file: giantint
+  source: test.json
+  extract: "$.numbers.giantint"
+- output_file: float
+  source: test.json
+  extract: "$.numbers.float"
+- output_file: floatingpoint
+  source: test.json
+  extract: "$.numbers.floatingpoint"
+- output_file: maxint64
+  source: test.json
+  extract: "$.numbers.maxint64"
+- output_file: maxint64neg
+  source: test.json
+  extract: "$.numbers.maxint64neg"
+- output_file: floatingpointcap
+  source: test.json
+  extract: "$.numbers.floatingpointcap"
+- output_file: floatingpointneg
+  source: test.json
+  extract: "$.numbers.floatingpointneg"
+- output_file: floatingpointfrac
+  source: test.json
+  extract: "$.numbers.floatingpointfrac"
+- output_file: floatingpointfraccapneg
+  source: test.json
+  extract: "$.numbers.floatingpointfraccapneg"

@@ -1,0 +1,6 @@
+name: "failure-1"
+namespace: unittest
+data:
+# cannot specify output_file with a glob
+- output_file: features.php
+  source: config/generated/*.php
