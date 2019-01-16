@@ -164,4 +164,4 @@ For reference, these are size limits discussions:
 
 [Apache 2.0](/LICENSE.txt)
 
-Copyright 2018, Tumblr, Inc.
+Copyright 2019, Tumblr, Inc.
